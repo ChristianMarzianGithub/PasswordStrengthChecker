@@ -1,0 +1,213 @@
+PROMPT START
+
+Build a complete Password Strength Checker web application.
+
+Architecture
+
+Frontend: React + TypeScript + Vite
+
+Backend: None required unless needed for optional breach-checking
+
+If breach-checking is implemented → use Node.js (Express) or Python (FastAPI)
+
+Styling: TailwindCSS
+
+Provide Dockerfile(s)
+
+Provide docker-compose.yml (even if only the frontend is used, prepare for potential backend)
+
+Clean folder structure
+
+App must be deployable on GCP Cloud Run.
+
+App Purpose
+
+The app must evaluate a password’s strength, provide a numeric score, categorize it, and give actionable feedback.
+
+Scoring Dimensions
+
+The frontend must implement a robust scoring algorithm that evaluates:
+
+1. Length
+
+<8 characters
+
+8–11
+
+12–15
+
+≥16
+
+2. Character Variety
+
+lowercase
+
+uppercase
+
+numbers
+
+symbols
+
+uncommon symbols
+
+3. Pattern Detection
+
+keyboard sequences (e.g., qwerty, asdf, 1234)
+
+repeated characters (aaaaa)
+
+predictable patterns (abc, xyz, 111, 2024)
+
+known weak passwords (password, letmein, etc.)
+
+4. Entropy estimation
+
+Calculate entropy based on character set and length
+
+Derive estimated brute-force time (offline cracking)
+
+5. Dictionary word detection
+
+Detect full words inside the password
+
+Detect reversed words
+
+Detect leetspeak mappings (p@ssw0rd)
+
+6. Optional: Breach Check
+
+If you choose to implement it:
+
+Use the Have I Been Pwned Pwned Passwords API (k-Anonymity)
+
+Never send full password
+
+Implement prefix search (first 5 SHA1 characters)
+
+All evaluation must return:
+
+numeric score: 0–100
+
+category:
+
+Very Weak (0–20)
+
+Weak (21–40)
+
+Medium (41–60)
+
+Strong (61–80)
+
+Very Strong (81–100)
+
+explanations for every deduction
+
+suggestions for improvement
+
+Frontend Requirements
+
+Password input field (masked/unmasked toggle)
+
+Real-time strength evaluation as user types
+
+Display:
+
+Final score (0–100)
+
+Category badge (color-coded)
+
+Entropy (bits)
+
+Estimated cracking time
+
+Triggered warnings (e.g., “Contains dictionary word”)
+
+Improvement suggestions
+
+Optional “Pwned?” result if breach-checking is enabled
+
+Progress bar that visually reflects strength
+
+Dark/light mode toggle
+
+A list of example passwords users can click to auto-fill
+
+Local history stored via localStorage (last 10 evaluations)
+
+Additional UI elements:
+
+Tooltip explaining entropy
+
+Toggle “Check against breach databases” (if backend enabled)
+
+Backend Requirements (Only if breach-checking is enabled)
+
+Implement:
+
+Endpoint: GET /pwned?hashPrefix=xxxxx
+
+Query Have I Been Pwned range API
+
+Return matching suffixes
+
+Frontend performs the last-match check
+
+Never log or store any password
+
+Responses:
+{
+  "found": true,
+  "count": 38422
+}
+
+
+or
+
+{
+  "found": false
+}
+
+
+Provide:
+
+Dockerfile
+
+Clean error handling
+
+CORS enabled for frontend origin
+
+DevOps & Deliverables
+
+Provide:
+
+Full frontend code
+
+Optional backend code (if breach-checking is implemented)
+
+Dockerfile(s)
+
+docker-compose.yml
+
+Tailwind config, Vite config, tsconfig
+
+README with:
+
+local setup
+
+Docker instructions
+
+Cloud Run deployment steps
+
+Example passwords + expected evaluations
+
+Unit tests for:
+
+entropy calculation
+
+pattern detection
+
+dictionary detection
+
+improvement suggestion logic
+
+PROMPT END
